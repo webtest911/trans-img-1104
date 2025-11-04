@@ -66,9 +66,10 @@ export default function Home() {
 
     try {
       // 동적으로 jsPDF 라이브러리 로드
-      const jsPDFModule = await import("jspdf");
+      const jsPDFModule = await import("jspdf") as any;
       
       // jsPDF v3.x에서는 { jsPDF } 형태로 named export 사용
+      // 타입 안전성을 위해 any로 처리하고 런타임에서 확인
       let jsPDF: any;
       if (jsPDFModule.jsPDF) {
         // named export 사용
@@ -79,6 +80,11 @@ export default function Home() {
       } else {
         // 모듈 자체가 클래스인 경우
         jsPDF = jsPDFModule;
+      }
+
+      // jsPDF가 함수나 클래스인지 확인
+      if (typeof jsPDF !== "function" && typeof jsPDF !== "object") {
+        throw new Error("jsPDF를 올바르게 로드할 수 없습니다.");
       }
 
       // 모든 이미지를 하나의 PDF로 합치기
