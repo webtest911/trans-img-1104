@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useCallback, useRef } from "react";
-import { Upload, FileImage, X, Download, Loader2 } from "lucide-react";
+import { FileImage, X, Download, Loader2 } from "lucide-react";
 
 export default function Home() {
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
